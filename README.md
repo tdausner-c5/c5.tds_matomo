@@ -5,7 +5,7 @@ Add the MATOMO add-on block to your web sites **Stacks & Global Areas** > **Glob
 global areas. I'd recommend a global area at the web page bottom, or - as it's best to remember - the 
 first or the last of the global areas. I prefer the last global area.
 
-The add-on needs holds two entry fields:
+The add-on holds two entry fields:
 * the MATOMO system's URL without leading http:// or https://
 * site ID from the target MATOMO system
 
