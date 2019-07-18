@@ -2,7 +2,7 @@
 
 if (Page::getCurrentPage()->isEditMode())
 {
-    echo '<pre>'.t('Place holder for Matomo embedding (contains no visible content)').'</pre>';
+    echo '<pre>'.t('Place holder for Matomo embedding (contains no visible content)').'  ID:'.$websiteId.'  URL:'.$url.'</pre>';
 }
 else
 {
