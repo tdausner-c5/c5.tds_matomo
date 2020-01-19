@@ -15,7 +15,7 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
 class Controller extends Package
 {
     protected $pkgHandle = 'tds_matomo';
-    protected $appVersionRequired = '8.1';
+    protected $appVersionRequired = '5.7.5.6';
     protected $pkgVersion = '0.9.0';
 
     public function getPackageName()
