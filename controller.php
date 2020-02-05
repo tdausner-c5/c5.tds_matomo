@@ -2,13 +2,13 @@
 /**
  * TDS Matomo embedding
  *
- * Copyright 2019 - TDSystem Beratung & Training - Thomas Dausner
+ * Copyright 2020 - TDSystem Beratung & Training - Thomas Dausner
  */
 
 namespace Concrete\Package\TdsMatomo;
 
 use Concrete\Core\Package\Package;
-use Concrete\Core\Block\BlockType\BlockType;
+use SinglePage;
 
 defined('C5_EXECUTE') or die(_("Access Denied."));
 
@@ -30,17 +30,49 @@ class Controller extends Package
 
     public function install()
     {
+        /** @var $pkg \Concrete\Core\Package\Package() */
         $pkg = parent::install();
 
-        $blk = BlockType::getByHandle($this->pkgHandle);
-        if (!is_object($blk))
-        {
-            BlockType::installBlockType($this->pkgHandle, $pkg);
+        //install single pages
+        $single_page = SinglePage::add('/dashboard/system/seo/tds_matomo', $pkg);
+        if ($single_page) {
+            $single_page->update(array('cName'=>t('Matomo embedding'), 'cDescription'=>t('Setup Matomo server and site ID for webtracking of your site.')));
         }
     }
 
     public function uninstall()
     {
         $pkg = parent::uninstall();
+    }
+
+    public function on_start()
+    {
+        $config = $this->app->make('config/database');
+        $matomoUrl = $config->get('tds_matomo.serverurl');
+        $siteID = $config->get('tds_matomo.siteid');
+        if (!empty($matomoUrl) && !empty($siteID))
+        {
+            $matomoUrl = idn_to_ascii(preg_replace("#(https?://)?/?([^/]+)/?#", "/$2/", $matomoUrl));
+            $v = \View::getInstance();
+            $v->addFooterItem('<script type="text/javascript">
+    if ( typeof ( _paq ) === "undefined" )
+    {
+        var _paq = _paq || [];
+        _paq.push( ["trackPageView"] );
+        _paq.push( ["enableLinkTracking"] );
+        ( function () {
+            var u = "' . $matomoUrl . '";
+            _paq.push( ["setTrackerUrl", u + "piwik.php"] );
+            _paq.push( ["setSiteId", "' . $siteID . '"] );
+            var d = document, g = d.createElement( "script" ), s = d.getElementsByTagName( "script" )[0];
+            g.type = "text/javascript";
+            g.async = true;
+            g.defer = true;
+            g.src = u + "piwik.js";
+            s.parentNode.insertBefore( g, s );
+        } )();
+    }
+</script>');
+        }
     }
 }
