@@ -54,9 +54,10 @@ class Controller extends Package
         $siteID = $config->get('tds_matomo.siteid');
         if (!empty($matomoUrl) && !empty($siteID))
         {
-            $matomoUrl = preg_replace("#(https?://)?/?([^/]+)/?#", "/$2/", $matomoUrl);
-            if (!preg_match("/^[0-9a-z.\/-]+$/i", $matomoUrl))
+            if (!preg_match("/^[0-9a-z.-]+$/i", $matomoUrl) && function_exists('idn_to_ascii'))
+            {
                 $matomoUrl = idn_to_ascii($matomoUrl);
+            }
             $v = \View::getInstance();
             $v->addFooterItem('<script type="text/javascript">
     if ( typeof ( _paq ) === "undefined" )
@@ -65,7 +66,7 @@ class Controller extends Package
         _paq.push( ["trackPageView"] );
         _paq.push( ["enableLinkTracking"] );
         ( function () {
-            var u = "' . $matomoUrl . '";
+            var u = "/' . $matomoUrl . '/";
             _paq.push( ["setTrackerUrl", u + "piwik.php"] );
             _paq.push( ["setSiteId", "' . $siteID . '"] );
             var d = document, g = d.createElement( "script" ), s = d.getElementsByTagName( "script" )[0];

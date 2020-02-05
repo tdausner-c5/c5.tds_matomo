@@ -7,10 +7,6 @@ $form = \Core::make('helper/form');
 <p class="help-block"><?php echo t("Specify Matomo server URL and site ID supplied by your Matomo web tracking provider.
 Server URL protocol (http|hhtps) can be ommitted as it is replaced by the web site's protocol."); ?></p>
 
-<p class="help-block"><?php echo t('WARNING: to utilize an internationalized domain name (IDN) 
-you must have <code>php_intl</code> enabled in php.ini of your web server.'); ?></p>
-<p></p>
-
 <form id="tracking-code-form" action="<?php echo $view->action(''); ?>" method="post">
     <?php echo Core::make('helper/validation/token')->output('update_tracking_code'); ?>
 

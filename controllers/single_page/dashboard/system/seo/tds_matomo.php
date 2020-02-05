@@ -22,36 +22,49 @@ class TdsMatomo extends DashboardPageController  {
             $errmsg = '';
             if ($this->token->validate('update_tracking_code'))
             {
-                $matomoUrl = $checkUrl = trim($this->post('tds_matomo_serverurl'));
+                $matomoUrl = trim($this->post('tds_matomo_serverurl'));
+                $matomoUrl = $checkUrl = preg_replace("#(https?://)?([^/]+)#", "$2", $matomoUrl);
                 if (!preg_match("/^[0-9a-z.-]+$/i", $matomoUrl))
-                    $checkUrl = idn_to_ascii($matomoUrl);
-                $siteId = $this->post('tds_matomo_siteid');
-                $rlabel = '([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)';
-                if (empty($matomoUrl))
                 {
-                    $errmsg = t('Matomo server URL must not be empty.');
-                }
-                elseif (!preg_match('/^(https?:\/\/)?([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.){1,2}[a-z0-9]{0,63}$/i', $checkUrl))
-                {
-                    $errmsg = t('Matomo server URL must be a valid server URL.');
-                }
-                elseif(empty($siteId))
-                {
-                    $errmsg = t('Matomo site ID must by a number greater equal 1.');
-                }
-                else
-                {
-                    $config->save('tds_matomo.serverurl', trim($matomoUrl));
-                    $config->save('tds_matomo.siteid', $this->post('tds_matomo_siteid'));
-
-                    $pageCache = PageCache::getLibrary();
-                    if (is_object($pageCache))
+                    if (function_exists('idn_to_ascii'))
                     {
-                        $pageCache->flush();
+                        $checkUrl = idn_to_ascii($matomoUrl);
                     }
-                    $this->redirect('/dashboard/system/seo/tds_matomo', 'saved');
+                    else
+                    {
+                        $errmsg = t('No support for internationalized domain names (IDN).<br><br>
+To utilize an internationalized domain name (IDN) you must have <code>php_intl</code> enabled in php.ini of your web server.');
+                    }
                 }
-            } else
+                if ($errmsg == '')
+                {
+                    $siteId = $this->post('tds_matomo_siteid');
+                    if (empty($matomoUrl))
+                    {
+                        $errmsg = t('Matomo server URL must not be empty.');
+                    }
+                    elseif (!preg_match('/^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.){1,2}[a-z0-9]{0,63}$/i', $checkUrl))
+                    {
+                        $errmsg = t('Matomo server URL must be a valid server URL.' . $matomoUrl);
+                    }
+                    elseif (empty($siteId))
+                    {
+                        $errmsg = t('Matomo site ID must by a number greater equal 1.');
+                    } else
+                    {
+                        $config->save('tds_matomo.serverurl', trim($matomoUrl));
+                        $config->save('tds_matomo.siteid', $this->post('tds_matomo_siteid'));
+
+                        $pageCache = PageCache::getLibrary();
+                        if (is_object($pageCache))
+                        {
+                            $pageCache->flush();
+                        }
+                        $this->redirect('/dashboard/system/seo/tds_matomo', 'saved');
+                    }
+                }
+            }
+            else
             {
                 $errmsg = $this->token->getErrorMessage();
             }
