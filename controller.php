@@ -47,12 +47,16 @@ class Controller extends Package
 
     public function on_start()
     {
-        $config = $this->app->make('config/database');
+        $version8 = version_compare(\Config::get('concrete')['version_installed'], '8');
+        $app = $version8 >= 0 ? $this->app : \Core::getFacadeApplication();
+        $config = $app->make('config/database');
         $matomoUrl = $config->get('tds_matomo.serverurl');
         $siteID = $config->get('tds_matomo.siteid');
         if (!empty($matomoUrl) && !empty($siteID))
         {
-            $matomoUrl = idn_to_ascii(preg_replace("#(https?://)?/?([^/]+)/?#", "/$2/", $matomoUrl));
+            $matomoUrl = preg_replace("#(https?://)?/?([^/]+)/?#", "/$2/", $matomoUrl);
+            if (!preg_match("/^[0-9a-z.\/-]+$/i", $matomoUrl))
+                $matomoUrl = idn_to_ascii($matomoUrl);
             $v = \View::getInstance();
             $v->addFooterItem('<script type="text/javascript">
     if ( typeof ( _paq ) === "undefined" )
