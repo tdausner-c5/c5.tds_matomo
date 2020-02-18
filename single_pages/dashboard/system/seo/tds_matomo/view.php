@@ -1,14 +1,16 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.');
 
+$app = \Concrete\Core\Support\Facade\Facade::getFacadeApplication();
+
 /** @var Concrete\Core\Form\Service\Form $form */
-$form = \Core::make('helper/form');
+$form = $app->make('helper/form');
 ?>
 
 <p class="help-block"><?php echo t("Specify Matomo server URL and site ID supplied by your Matomo web tracking provider.
 Server URL protocol (http|hhtps) can be ommitted as it is replaced by the web site's protocol."); ?></p>
 
 <form id="tracking-code-form" action="<?php echo $view->action(''); ?>" method="post">
-    <?php echo Core::make('helper/validation/token')->output('update_tracking_code'); ?>
+    <?php echo $app->make('helper/validation/token')->output('update_tracking_code'); ?>
 
     <div class="form-group">
         <p>

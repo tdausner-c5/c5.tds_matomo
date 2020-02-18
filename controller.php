@@ -7,15 +7,18 @@
 
 namespace Concrete\Package\TdsMatomo;
 
+use Events;
 use Concrete\Core\Package\Package;
-use SinglePage;
+use Concrete\Core\Page\Page;
+use Concrete\Core\Page\Single;
+use Concrete\Core\View\View;
 
-defined('C5_EXECUTE') or die(_("Access Denied."));
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class Controller extends Package
 {
     protected $pkgHandle = 'tds_matomo';
-    protected $appVersionRequired = '5.7.5.6';
+    protected $appVersionRequired = '8.0';
     protected $pkgVersion = '0.9.0';
 
     public function getPackageName()
@@ -34,9 +37,10 @@ class Controller extends Package
         $pkg = parent::install();
 
         //install single pages
-        $single_page = SinglePage::add('/dashboard/system/seo/tds_matomo', $pkg);
-        if ($single_page) {
-            $single_page->update(array('cName'=>t('Matomo embedding'), 'cDescription'=>t('Setup Matomo server and site ID for webtracking of your site.')));
+        $single_page = Single::add('/dashboard/system/seo/tds_matomo', $pkg);
+        if ($single_page)
+        {
+            $single_page->update(['cName' => t('Matomo embedding'), 'cDescription' => t('Setup Matomo server and site ID for webtracking of your site.')]);
         }
     }
 
@@ -47,19 +51,24 @@ class Controller extends Package
 
     public function on_start()
     {
-        $version8 = version_compare(\Config::get('concrete')['version_installed'], '8');
-        $app = $version8 >= 0 ? $this->app : \Core::getFacadeApplication();
-        $config = $app->make('config/database');
-        $matomoUrl = $config->get('tds_matomo.serverurl');
-        $siteID = $config->get('tds_matomo.siteid');
-        if (!empty($matomoUrl) && !empty($siteID))
-        {
-            if (!preg_match("/^[0-9a-z.-]+$/i", $matomoUrl) && function_exists('idn_to_ascii'))
+        Events::addListener('on_before_render', function ($event) {
+
+            # - it is not loaded or run for dashboard pages
+            # - it is not loaded or run when in edit mode
+            $c = Page::getCurrentPage();
+            if ($c->getPageTypeID() != 0 && !$c->isEditMode())
             {
-                $matomoUrl = idn_to_ascii($matomoUrl);
-            }
-            $v = \View::getInstance();
-            $v->addFooterItem('<script type="text/javascript">
+                $config = $this->app->make('config/database');
+                $matomoUrl = $config->get('tds_matomo.serverurl');
+                $siteID = $config->get('tds_matomo.siteid');
+                if (!empty($matomoUrl) && !empty($siteID))
+                {
+                    if (!preg_match("/^[0-9a-z.-]+$/i", $matomoUrl) && function_exists('idn_to_ascii'))
+                    {
+                        $matomoUrl = idn_to_ascii($matomoUrl);
+                    }
+                    $v = View::getInstance();
+                    $v->addFooterItem('<script type="text/javascript">
     if ( typeof ( _paq ) === "undefined" )
     {
         var _paq = _paq || [];
@@ -78,6 +87,8 @@ class Controller extends Package
         } )();
     }
 </script>');
-        }
+                }
+            }
+        });
     }
 }

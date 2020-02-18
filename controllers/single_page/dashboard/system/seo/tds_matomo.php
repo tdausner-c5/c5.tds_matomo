@@ -7,6 +7,7 @@
 namespace Concrete\Package\TdsMatomo\Controller\SinglePage\Dashboard\System\Seo;
 
 use Concrete\Core\Cache\Page\PageCache;
+use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Page\Controller\DashboardPageController;
 
 class TdsMatomo extends DashboardPageController  {
@@ -17,12 +18,14 @@ class TdsMatomo extends DashboardPageController  {
         $this->set('tds_matomo_serverurl', $config->get('tds_matomo.serverurl'));
         $this->set('tds_matomo_siteid', $config->get('tds_matomo.siteid'));
 
-        if ($this->isPost())
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST')
         {
             $errmsg = '';
             if ($this->token->validate('update_tracking_code'))
             {
-                $matomoUrl = trim($this->post('tds_matomo_serverurl'));
+                $matomoUrl = trim($request->get('tds_matomo_serverurl'));
                 $matomoUrl = $checkUrl = preg_replace("#(https?://)?([^/]+)#", "$2", $matomoUrl);
                 if (!preg_match("/^[0-9a-z.-]+$/i", $matomoUrl))
                 {
@@ -38,14 +41,14 @@ To utilize an internationalized domain name (IDN) you must have <code>php_intl</
                 }
                 if ($errmsg == '')
                 {
-                    $siteId = $this->post('tds_matomo_siteid');
+                    $siteId = $request->get('tds_matomo_siteid');
                     if (empty($matomoUrl))
                     {
                         $errmsg = t('Matomo server URL must not be empty.');
                     }
                     elseif (!preg_match('/^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.){1,2}[a-z0-9]{0,63}$/i', $checkUrl))
                     {
-                        $errmsg = t('Matomo server URL must be a valid server URL.' . $matomoUrl);
+                        $errmsg = t('Matomo server URL must be a valid server URL.');
                     }
                     elseif (empty($siteId))
                     {
@@ -53,14 +56,14 @@ To utilize an internationalized domain name (IDN) you must have <code>php_intl</
                     } else
                     {
                         $config->save('tds_matomo.serverurl', trim($matomoUrl));
-                        $config->save('tds_matomo.siteid', $this->post('tds_matomo_siteid'));
+                        $config->save('tds_matomo.siteid', $request->get('tds_matomo_siteid'));
 
                         $pageCache = PageCache::getLibrary();
                         if (is_object($pageCache))
                         {
                             $pageCache->flush();
                         }
-                        $this->redirect('/dashboard/system/seo/tds_matomo', 'saved');
+                        return $this->app->make(ResponseFactoryInterface::class)->redirect('/dashboard/system/seo/tds_matomo/saved', 302);
                     }
                 }
             }
