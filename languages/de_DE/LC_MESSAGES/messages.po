@@ -1,77 +1,85 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tds_matomo 0.9.0\n"
+"Project-Id-Version: tds_matomo 0.9.2\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-02-05T15:13:39+01:00\n"
-"PO-Revision-Date: 2020-02-05T15:13:39+01:00\n"
+"POT-Creation-Date: 2020-02-28T13:45:00+01:00\n"
+"PO-Revision-Date: 2020-02-28T13:45:00+01:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: packages/tds_matomo/controller.php:23
+#: packages/tds_matomo/controller.php:27
 msgid "TDS Matomo embedding"
 msgstr "TDS Matomo-Einbettung"
 
-#: packages/tds_matomo/controller.php:28
+#: packages/tds_matomo/controller.php:32
 msgid "Add Matomo web tracking on your pages."
 msgstr "Webtracking mit Matomo zur Seite hinzufügen."
 
-#: packages/tds_matomo/controller.php:39
+#: packages/tds_matomo/controller.php:46
 msgid "Matomo embedding"
 msgstr "Matomo-Einbettung"
 
-#: packages/tds_matomo/controller.php:39
+#: packages/tds_matomo/controller.php:46
 msgid "Setup Matomo server and site ID for webtracking of your site."
 msgstr "Eintragen eines Matomo Servers uns Site ID zum Tracken der Website."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:35
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:47
 msgid ""
 "No support for internationalized domain names (IDN).<br><br>\n"
 "To utilize an internationalized domain name (IDN) you must have <code>php_intl</code> enabled in php.ini of your web server."
-msgstr ""
-"Internatiolnalisierte Domain Namen (IDN) werden nicht "
-"unterstützt.<br><br>\nUm einen \"internationalisierte Domain-Name\" (IDN, "
-"auch \"Umlaut-Domain\" genannt) zu verwenden, muss <code>php_intl</code> in "
-"der Datei php.ini des Webservers aktiviert sein."
+msgstr "Internatiolnalisierte Domain Namen (IDN) werden nicht unterstützt.<br><br>Um einen \"internationalisierte Domain-Name\" (IDN, auch \"Umlaut-Domain\" genannt) zu verwenden, muss <code>php_intl</code> in der Datei php.ini des Webservers aktiviert sein."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:44
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:56
 msgid "Matomo server URL must not be empty."
 msgstr "Die Matomo-Server-URL darf nicht leer sein."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:48
-msgid "Matomo server URL must be a valid server URL."
-msgstr "Die Matomo-Server-URL muss eine gültige Server-URL sein."
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:60
+msgid "Matomo server URL must be a valid URL (including protocol http:// or https://)."
+msgstr "Die Matomo-Server-URL muss eine gültige URL sein (mit Protokoll-Angabe http:// oder https://)."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:52
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:64
 msgid "Matomo site ID must by a number greater equal 1."
 msgstr "Die Matomo-Site-ID muss eine Zahl größer gleich 1 sein."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:81
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:97
 msgid "Matomo webtracking settings updated successfully."
 msgstr "Einträge für Matomo Webtracking erfolgreich geändert."
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:82
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:98
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:120
 msgid "Cached files removed."
 msgstr "Cache-Einträge gelöscht."
 
-#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:7
-msgid ""
-"Specify Matomo server URL and site ID supplied by your Matomo web tracking provider.\n"
-"Server URL protocol (http|hhtps) can be ommitted as it is replaced by the web site's protocol."
-msgstr "Hier ist die Matomo-Server-URL und die Site-ID anzugeben, die vom Matomo Web-Tracking-Provider bereitgestellt wird. Das Protkoll der Server-URL (http|https) kann weggelassen werden, da das Protokoll mit dem der Website ersetzt wird."
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:119
+msgid "Matomo webtracking data removed."
+msgstr "Matomo-Webtracking-Daten gelöscht."
 
-#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:15
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:21
+msgid "Specify Matomo server URL (including http:// or https:// protocol) and site ID supplied by your Matomo web tracking provider."
+msgstr "Matomo-Server-URL (mit Protokoll-Angabe http:// or https://) sowie Site-ID angeben, die vom Matomo-Webtracking-Anbieter zur Verfügung gestellt wurde."
+
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:28
 msgid "Matomo server URL"
 msgstr "Matomo-Server-URL"
 
-#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:19
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:32
 msgid "Site ID"
 msgstr "Site-ID"
 
-#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:26
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:40
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:55
+msgid "Remove"
+msgstr "Löschen"
+
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:42
 msgid "Save"
 msgstr "Speichern"
+
+#: packages/tds_matomo/single_pages/dashboard/system/seo/tds_matomo/view.php:53
+msgid "Remove Matomo tracking data?"
+msgstr "Matomo-Webtracking-Daten löschen?"
