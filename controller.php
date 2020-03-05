@@ -7,7 +7,8 @@
 
 namespace Concrete\Package\TdsMatomo;
 
-use Events;
+use Concrete\Core\Config\Repository\Repository;
+use Concrete\Core\Support\Facade\Events;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Single;
@@ -19,7 +20,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'tds_matomo';
     protected $appVersionRequired = '8.0';
-    protected $pkgVersion = '0.9.0';
+    protected $pkgVersion = '1.0.0';
 
     public function getPackageName()
     {
@@ -33,7 +34,9 @@ class Controller extends Package
 
     public function install()
     {
-        /** @var $pkg \Concrete\Core\Package\Package() */
+        /**
+         * @var $pkg Package
+         */
         $pkg = parent::install();
 
         //install single pages
@@ -44,22 +47,20 @@ class Controller extends Package
         }
     }
 
-    public function uninstall()
-    {
-        $pkg = parent::uninstall();
-    }
-
     public function on_start()
     {
-        Events::addListener('on_before_render', function ($event) {
+        Events::addListener('on_start', function ($event) {
 
             # - it is not loaded or run for dashboard pages
             # - it is not loaded or run when in edit mode
             $c = Page::getCurrentPage();
-            if ($c->getPageTypeID() != 0 && !$c->isEditMode())
+            if (is_object($c) && $c->getPageTypeID() != 0 && !$c->isEditMode())
             {
+                /**
+                 * @var $config Repository
+                 */
                 $config = $this->app->make('config/database');
-                $matomoUrl = $config->get('tds_matomo.serverurl');
+                $matomoUrl = trim($config->get('tds_matomo.serverurl'), '/');
                 $siteID = $config->get('tds_matomo.siteid');
                 if (!empty($matomoUrl) && !empty($siteID))
                 {
@@ -75,7 +76,7 @@ class Controller extends Package
         _paq.push( ["trackPageView"] );
         _paq.push( ["enableLinkTracking"] );
         ( function () {
-            var u = "/' . $matomoUrl . '/";
+            var u = "' . $matomoUrl . '/";
             _paq.push( ["setTrackerUrl", u + "piwik.php"] );
             _paq.push( ["setSiteId", "' . $siteID . '"] );
             var d = document, g = d.createElement( "script" ), s = d.getElementsByTagName( "script" )[0];
