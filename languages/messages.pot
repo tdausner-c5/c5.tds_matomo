@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tds_matomo 0.9.2\n"
+"Project-Id-Version: tds_matomo 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-02-28T13:45:00+01:00\n"
-"PO-Revision-Date: 2020-02-28T13:45:00+01:00\n"
+"POT-Creation-Date: 2020-03-05T21:36:10+01:00\n"
+"PO-Revision-Date: 2020-03-05T21:36:10+01:00\n"
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -28,34 +28,34 @@ msgstr ""
 msgid "Setup Matomo server and site ID for webtracking of your site."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:47
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:45
 msgid ""
 "No support for internationalized domain names (IDN).<br><br>\n"
 "To utilize an internationalized domain name (IDN) you must have <code>php_intl</code> enabled in php.ini of your web server."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:56
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:54
 msgid "Matomo server URL must not be empty."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:60
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:58
 msgid "Matomo server URL must be a valid URL (including protocol http:// or https://)."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:64
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:62
 msgid "Matomo site ID must by a number greater equal 1."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:97
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:95
 msgid "Matomo webtracking settings updated successfully."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:98
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:120
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:96
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:117
 msgid "Cached files removed."
 msgstr ""
 
-#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:119
+#: packages/tds_matomo/controllers/single_page/dashboard/system/seo/tds_matomo.php:116
 msgid "Matomo webtracking data removed."
 msgstr ""
 
